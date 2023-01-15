@@ -22,8 +22,8 @@ def cleanBackUp():
             OwnerIds=['self'],
             Filters=[
                 {
-                'Name' : 'volume-id',
-                'Values' : [volumeId]
+                    'Name': 'volume-id',
+                    'Values': [volumeId]
                 }
             ]
 
@@ -31,11 +31,10 @@ def cleanBackUp():
 
         sortedSnapshot = sorted(snapshots['Snapshots'], key=itemgetter('StartTime'))
 
-
-        for snapshot in sortedSnapshot[2:]:
+        for snapshot in sortedSnapshot:
             snapshotId = snapshot['SnapshotId']
             print(snapshotId)
-            response =ec2_client.delete_snapshot(
+            response = ec2_client.delete_snapshot(
                 SnapshotId=snapshotId
             )
             print(f"Snapshot with ID:{snapshotId} for VolumeID:{volumeId} has been deleted at: {datetime.now()}")
